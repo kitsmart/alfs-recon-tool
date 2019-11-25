@@ -7,7 +7,7 @@ try:
     import nmap
 
 except ImportError:
-    print("Oops! You're missing the nmap module. Please install it, you can use pip install nmap for this.")
+    print("Oops! You're missing the nmap module. Please install it, you can use `pip install python-nmap` for this.")
     exit()
     
 print("""   
@@ -41,29 +41,27 @@ def portscan():
             for port in lport:
                 print("port : %s\tstate : %s" % (port, nm[host][proto][port]['state']))
 
+def invalidFuncCall():
+    print("Sorry, that feature hasn't been written yet...")
+
 
 def menu():
+    menu_options = {
+        '1' : portscan,
+        '2' : invalidFuncCall, #domainRecon,
+        '3' : invalidFuncCall, #urlFuzzing,
+        '4' : invalidFuncCall, #completeScan,
+        '5' : exit
+        }
+    
     print("""This tool has many recon purposes. please select the option you would like:
                     1. Portscan (nmap)
                     2. Domain history, info and registered subdomains
                     3. URL Fuzzing
                     4. Exit
                     """)
-    choice = str(input("Input your choice: "))
+    menu_options[input("Input your choice: ")]()
 
-    if choice == '1':
-        portscan()
-
-    elif choice == '2':
-        domainRecon()
-
-    elif choice == '3':
-        urlFuzzing()
-
-    elif choice == '4':
-        completeScan()
-
-    elif choice == '5':
-        exit()
-
-menu()
+while True:
+    menu()
+    input("To continue press RETURN\n")
