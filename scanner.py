@@ -9,6 +9,16 @@ try:
 except ImportError:
     print("Oops! You're missing the nmap module. Please install it, you can use `pip install python-nmap` for this.")
     exit()
+
+try:
+    import whois
+
+except ImportError:
+    print("Oops! You're msising the whois module. Please install it, you can use 'pip install whois' for this.")
+    exit()
+
+from crtsh import crtshAPI
+import json
     
 print("""   
    _____  .__   _____                                            
@@ -41,17 +51,29 @@ def portscan():
             for port in lport:
                 print("port : %s\tstate : %s" % (port, nm[host][proto][port]['state']))
 
+def domainCheck():
+    domainName = input("Input a domain name: ")
+    domain = whois.query(domainName)
+    print("\n----------------")
+    print("Name : %s" % domain.name)
+    print("exp. date : %s" % domain.expiration_date)
+    print("creation date : %s" % domain.creation_date)
+    print("registrar : %s" % domain.registrar)
+    print("----------------")
+    print(json.dumps(crtshAPI().search('uber.com')))
+
 def invalidFuncCall():
     print("Sorry, that feature hasn't been written yet...")
 
+def exitProgram():
+    exit()
 
 def menu():
     menu_options = {
         '1' : portscan,
-        '2' : invalidFuncCall, #domainRecon,
+        '2' : domainCheck, #domainRecon,
         '3' : invalidFuncCall, #urlFuzzing,
-        '4' : invalidFuncCall, #completeScan,
-        '5' : exit
+        '4' : exitProgram
         }
     
     print("""This tool has many recon purposes. please select the option you would like:
