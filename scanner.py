@@ -16,9 +16,6 @@ try:
 except ImportError:
     print("Oops! You're msising the whois module. Please install it, you can use 'pip install whois' for this.")
     exit()
-
-from crtsh import crtshAPI
-import json
     
 print("""   
    _____  .__   _____                                            
